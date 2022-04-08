@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if widget_list|length == 0 %}
+    <h3>No Widgets Exist</h3>
+    {% else %}
+    <table class="pure-table pure-table-striped">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for widget in widget_list %}
+                <tr>
+                    <td>{{widget.description}}</td>
+                    <td>{{widget.quantity}}</td>
+                    <td><a href="{% url 'delete' widget.id %}">X</a></td> 
+                </tr>
+            {% endfor %}
+                {% comment %} 
+                <tr>
+                    <td></td>
+                    <td>{{number}}</td>
+                    <td></td>
+                </tr>
+                {% endcomment %}
+        </tbody>
+    </table>
+        
+        
+    {% endif %} 
+    <br><hr><br>
+    <form class="pure-form" action="{% url 'add_widget' %}" method="post">  
+        {% csrf_token %}
+        <div>
+            {{form.as_p}}
+        </div>
+        <input type="submit" value="Add Widget" class="pure-button">
+    </form>
+
+{% endblock content %}
